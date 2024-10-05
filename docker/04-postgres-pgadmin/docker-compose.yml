@@ -1,0 +1,43 @@
+# Le decimos a Docker la version del docker compose
+version: '3'
+
+# Definimos los servicios de nuestros containers
+services:
+  # Creamos nuestro container db
+  db:
+    # Nombre del contenedor
+    container_name: postgres-database
+    # Imagen del contenedor
+    image: postgres:15.3
+    # Definimos los volumenes para este contenedor
+    volumes:
+      # - postgres-db:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
+    # Definimos las variables de entorno
+    environment:
+      - POSTGRES_PASSWORD=123456
+
+  # Creamos nuestro container pgAdmin
+  pgAdmin:
+    # Establecemos que depende del container db
+    depends_on:
+      - db
+    # Imagen del contenedor
+    image: dpage/pgadmin4:8.2
+    # Los puertos que seran publicados por el contenedor
+    ports:
+      - "8080:80"
+    # Definimos el bind volume para la informacion del contenedor
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    # Definimos las variables de entorno
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=123456
+      - PGADMIN_DEFAULT_EMAIL=superman@google.com
+
+# Definimos los volumenes que seran utilizados para el Docker Compose
+volumes:
+  # Definimos el volumen para el container db
+  postgres-db:
+    # Le especificamos a Docker que el volumen va a ser uno ya creado
+    external: true
