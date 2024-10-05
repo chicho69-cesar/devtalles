@@ -1,0 +1,13 @@
+{
+  "name": "bases-app",
+  "version": "1.0.0",
+  "description": "Aplicacion de consola para mostrar tablas de multiplicar",
+  "main": "app.js",
+  "author": "Cesar",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {}
+}
